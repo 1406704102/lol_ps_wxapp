@@ -1,0 +1,33 @@
+<championRank wx:if="{{PageCur=='championRank'}}"></championRank>
+<champion wx:if="{{PageCur=='champion'}}"></champion>
+<item wx:if="{{PageCur=='item'}}"></item>
+<championChange wx:if="{{PageCur=='championChange'}}"></championChange>
+<!--<about wx:if="{{PageCur=='about'}}"></about>-->
+
+<view class="cu-bar tabbar bg-white shadow foot">
+    <view class="action" bindtap="NavChange" data-cur="championChange">
+        <view class='cuIcon-cu-image'>
+            <image src="/images/tabbar/basics{{PageCur=='championChange'?'_cur':''}}.png"></image>
+        </view>
+        <view class="{{PageCur=='about'?'text-green':'text-gray'}}">改动</view>
+    </view>
+    <view class="action" bindtap="NavChange" data-cur="championRank">
+        <view class='cuIcon-cu-image'>
+            <image src="/images/tabbar/basics{{PageCur=='championRank'?'_cur':''}}.png"></image>
+        </view>
+        <view class="{{PageCur=='basics'?'text-green':'text-gray'}}">排行</view>
+    </view>
+    <view class="action" bindtap="NavChange" data-cur="champion">
+        <view class='cuIcon-cu-image'>
+            <image src="/images/tabbar/component{{PageCur=='champion'?'_cur':''}}.png"></image>
+        </view>
+        <view class="{{PageCur=='component'?'text-green':'text-gray'}}">英雄</view>
+    </view>
+    <view class="action" bindtap="NavChange" data-cur="item">
+        <view class='cuIcon-cu-image'>
+            <image src="/images/tabbar/plugin{{PageCur=='item'?'_cur':''}}.png"></image>
+        </view>
+        <view class="{{PageCur=='plugin'?'text-green':'text-gray'}}">装备</view>
+    </view>
+
+</view>

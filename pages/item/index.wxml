@@ -1,0 +1,49 @@
+<!--<cu-custom bgColor="bg-white" iconColor="black">-->
+        <!--    <view slot="content" class="text-black">搜索英雄</view>-->
+        <!--</cu-custom>-->
+<view style="height:{{CustomBar}}px;position: sticky;top:0px;z-index:9999;"
+      class="flex flex-direction justify-end bg-gradual-blue-light">
+    <view class="cu-bar search " style="width:530rpx">
+        <view class="search-form round">
+            <text class="cuIcon-search"></text>
+            <input type="text" placeholder="搜索装备"
+                   confirm-type="search" bindinput="searchItem"></input>
+<!--            <button class="cu-btn sm round " style="width:160rpx;height:100%;margin-top:-2rpx" catch:tap="changeType">-->
+<!--                <view>-->
+<!--                    {{searchType === '0' ? '对局数据' : '基础数据'}}<text class="cuIcon-order margin-left-xs"></text>-->
+<!--                </view>-->
+<!--            </button>-->
+        </view>
+
+    </view>
+</view>
+<view class="margin-left-sm margin-top-sm padding-bottom-lg flex justify-start align-center flex-wrap" style="margin-bottom:120rpx">
+    <view catch:tap="showModal" data-id="{{item.itemId}}" data-name="{{item.name}}" data-target="Modal" data-img="{{item.iconPath}}"
+          class="flex flex-direction align-center margin-top-sm margin-right-sm" wx:for="{{items}}"
+          wx:if="{{item.isShow }}" style="width:126rpx;height:180rpx">
+        <view class="cu-avatar lg radius bg-gray"
+              style="background-image:url({{item.iconPath}})">
+        </view>
+        <view class="text-sm text-center margin-top-xs">
+            {{item.name}}
+        </view>
+    </view>
+</view>
+<view class="cu-modal {{modalName=='Modal'?'show':''}}">
+    <view class="cu-dialog">
+        <view class="cu-bar bg-white justify-end">
+            <view class="content text-bold">{{itemDetail.nameCn}}</view>
+            <view class="action" bindtap="hideModal">
+                <text class="cuIcon-close text-red"></text>
+            </view>
+        </view>
+        <view class="padding-lr-lg padding-bottom-lg width100 flex">
+            <view class="cu-avatar lg radius bg-gray margin-right margin-top-lg"
+                  style="background-image:url({{itemDetail.iconPath}})">
+            </view>
+            <text class="text-left" style="width:450rpx">
+                {{itemDetail.descCn}}
+            </text>
+        </view>
+    </view>
+</view>

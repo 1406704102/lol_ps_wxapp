@@ -1,0 +1,23 @@
+.mainRune1 {
+    margin-right: 10rpx;
+    border-radius: 50%;
+    border: #ffa353 solid 4rpx;
+    width: 75rpx;
+    height: 75rpx;
+}
+
+.mainRune2 {
+    margin-right: 10rpx;
+    border-radius: 50%;
+    border: #ffa353 solid 2rpx;
+    width: 50rpx;
+    height: 50rpx;
+}
+
+.mainRune3 {
+    margin-right: 10rpx;
+    border-radius: 50%;
+    border: #ffa353 solid 2rpx;
+    width: 40rpx;
+    height: 40rpx;
+}

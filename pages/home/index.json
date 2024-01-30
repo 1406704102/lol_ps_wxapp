@@ -1,0 +1,8 @@
+{
+  "usingComponents": {
+    "championRank": "/pages/championRank/index",
+    "item": "/pages/item/index",
+    "championChange": "/pages/championChange/index",
+    "champion": "/pages/champion/index"
+  }
+}

@@ -1,0 +1,351 @@
+<cu-custom bgColor="bg-white" isBack="{{true}}">
+    <view slot="backText">返回</view>
+    <view slot="content">{{championName}}</view>
+    <!--    <view class="action" slot="right">-->
+    <!--        <view class="cu-load load-icon {{!isLoad?'loading':'over'}}"></view>-->
+    <!--    </view>-->
+</cu-custom>
+<view>
+    <view  style="width:750rpx;height:384rpx">
+
+        <image src="{{skins[0].mainImg}}" style="width:100%;height:100%"></image>
+    </view>
+
+    <view class="cu-bar bg-white solid-bottom" style="margin-top:0rpx">
+        <view class="action sub-title flex">
+            <text class="text-xl text-bold text-cyan">{{championName}}</text>
+            <text class="bg-cyan" style="width:4rem"></text>
+<!--            <view class="flex align-center bg-orange margin-left-sm">-->
+<!--                <view wx:if="{{summary.isOp}}" class="bg-red shadow-blur padding-xs margin-right-sm round text-white"-->
+<!--                      style="width:50rpx;height:50rpx">-->
+<!--                    op-->
+<!--                </view>-->
+<!--                <view wx:else style="width:50rpx;height:50rpx"-->
+<!--                      class="text-center text-white shadow-blur padding-xs margin-right-sm round {{summary.psTier === 1 ? 'bg-red':''}} {{summary.psTier === 2 ? 'bg-orange': ''}} {{summary.psTier === 3 ? 'bg-yellow': ''}} {{summary.psTier === 4 ? 'bg-olive': ''}} {{summary.psTier === 5 ? 'bg-cyan': ''}}">-->
+<!--                    {{summary.psTier}}-->
+<!--                </view>-->
+<!--                <view wx:if="{{summary.isHoney}}" class="margin-right-sm">-->
+<!--                    <image src="{{honeyImg}}" style="width:60rpx;height:60rpx">-->
+<!--                    </image>-->
+<!--                </view>-->
+<!--            </view>-->
+        </view>
+
+        <view class="text-cyan margin-right" catch:tap="toDetail">
+            <text class="cuIcon-back lg text-gray" wx:if="{{canBack === '1'}}"></text> 基础数据 <text class="cuIcon-right lg text-gray" wx:if="{{canBack === '0'}}"></text>
+        </view>
+
+
+
+    </view>
+    <view class="flex justify-around padding-sm bg-white margin-bottom-xs text-left text-center">
+
+        <view>
+            <view class="text-center">
+                op指数
+            </view>
+            <view class="margin-top-xs text-sm text-center">
+                {{summary.psScore}}
+            </view>
+        </view>
+        <!--        <view>-->
+        <!--            <view class="text-center">-->
+        <!--                推荐指数-->
+        <!--            </view>-->
+        <!--            <view class="margin-top-xs text-sm text-center">-->
+        <!--                {{honeyScore}}-->
+        <!--            </view>-->
+        <!--        </view>-->
+        <view>
+            <view class="text-center">
+                胜率
+            </view>
+            <view class="margin-top-xs text-sm text-center">
+                {{summary.winRate}}%
+            </view>
+        </view>
+        <view>
+            <view class="text-center">
+                禁用率
+            </view>
+            <view class="margin-top-xs text-sm text-center">
+                {{summary.banRate}}%
+            </view>
+        </view>
+        <view>
+            <view class="text-center">
+                登场率
+            </view>
+            <view class="margin-top-xs text-sm text-center">
+                {{summary.pickRate}}%
+            </view>
+        </view>
+    </view>
+    <view class="cu-bar justify-left bg-white">
+        <view class="action sub-title">
+            <text class="text-xl text-bold text-cyan">劣势对线</text>
+            <text class="bg-cyan" style="width:4rem"></text>
+        </view>
+    </view>
+    <view class="padding-sm bg-white padding-left margin-bottom-xs flex justify-start align-center">
+        <view wx:for="{{summary.counterChampionIdList}}" wx:key="index" wx:for-item="item"
+              wx:if="{{summary.counterWinrateList[index]<50}}" class="flex flex-direction align-center margin-right-sm"
+              style="width:85rpx">
+            <view class="cu-avatar radius bg-gray"
+                  style="{{'background-image:url(https://cdn.lol.ps/assets/img/champion-portraits/'+ item +'_60.webp);'}}">
+            </view>
+
+            <view class="margin-top-xs text-sm">
+                {{summary.counterWinrateList[index]}}%
+            </view>
+        </view>
+    </view>
+    <view class="cu-bar justify-left bg-white">
+        <view class="action sub-title">
+            <text class="text-xl text-bold text-cyan">优势对线</text>
+            <text class="bg-cyan" style="width:4rem"></text>
+        </view>
+    </view>
+    <view class="padding-sm bg-white padding-left margin-bottom-xs flex justify-start align-center">
+        <view wx:for="{{summary.counterEasyChampionIdList}}" wx:key="index" wx:for-item="item"
+              wx:if="{{summary.counterEasyWinrateList[index] >= 50}}"
+              class="flex flex-direction align-center margin-right-sm"
+              style="width:85rpx">
+            <view class="cu-avatar radius bg-gray"
+                  style="{{'background-image:url(https://cdn.lol.ps/assets/img/champion-portraits/'+ item +'_60.webp);'}}">
+            </view>
+            <view class="margin-top-xs text-sm">
+                {{summary.counterEasyWinrateList[index]}}%
+            </view>
+        </view>
+    </view>
+    <view class="cu-bar justify-left bg-white">
+        <view class="action sub-title">
+            <text class="text-xl text-bold text-cyan">符文</text>
+            <text class="bg-cyan" style="width:4rem"></text>
+        </view>
+    </view>
+    <view class="padding-sm bg-white padding-left margin-bottom-xs flex align-center">
+        <image class="mainRune1 " src="{{'https://cdn.lol.ps/assets/img/runes/'+ summary.mainRune1+'_60.webp'}}"
+               mode="aspectFill"></image>
+        <image class="mainRune2" src="{{'https://cdn.lol.ps/assets/img/runes/'+summary.mainRune2+'_60.webp'}}"
+               mode="aspectFill"></image>
+        <image class="mainRune2" src="{{'https://cdn.lol.ps/assets/img/runes/'+summary.mainRune3+'_60.webp'}}"
+               mode="aspectFill"></image>
+        <image class="mainRune2" src="{{'https://cdn.lol.ps/assets/img/runes/'+summary.mainRune4+'_60.webp'}}"
+               mode="aspectFill"></image>
+
+        <image class="mainRune2" src="{{'https://cdn.lol.ps/assets/img/runes/'+summary.subRune1+'_60.webp'}}"
+               mode="aspectFill"></image>
+        <image class="mainRune2" src="{{'https://cdn.lol.ps/assets/img/runes/'+summary.subRune2+'_60.webp'}}"
+               mode="aspectFill"></image>
+        <image class="mainRune3" src="{{'https://cdn.lol.ps/assets/img/runes/'+summary.statperk1Id+'_60.webp'}}"
+               mode="aspectFill"></image>
+        <image class="mainRune3" src="{{'https://cdn.lol.ps/assets/img/runes/'+summary.statperk2Id+'_60.webp'}}"
+               mode="aspectFill"></image>
+        <image class="mainRune3" src="{{'https://cdn.lol.ps/assets/img/runes/'+summary.statperk3Id+'_60.webp'}}"
+               mode="aspectFill"></image>
+    </view>
+    <!--    <view class="cu-bar bg-white solid-bottom">-->
+    <!--        <view class="action">-->
+    <!--            <text class="cuIcon-titles text-cyan">召唤师技能</text>-->
+    <!--        </view>-->
+    <!--    </view>-->
+    <view class="cu-bar justify-left bg-white">
+        <view class="action sub-title">
+            <text class="text-xl text-bold text-cyan">召唤师技能</text>
+            <text class="bg-cyan" style="width:4rem"></text>
+        </view>
+    </view>
+    <view class="padding-top-sm margin-bottom-xs padding-left flex flex-direction justify-start bg-white align-center">
+        <view class="flex justify-between margin-bottom-sm" style="width:100%" wx:for="{{spellItem.spellWinrates}}"
+              wx:for-item="item" wx:key="index">
+            <view class="flex">
+                <view class="cu-avatar"
+                      style="{{'background-image:url(https://cdn.lol.ps/assets/img/spells/'+item.spell1Id+'_40.webp);'}}"></view>
+                <view class="cu-avatar margin-left-sm"
+                      style="{{'background-image:url(https://cdn.lol.ps/assets/img/spells/'+item.spell2Id+'_40.webp);'}}"></view>
+            </view>
+            <view class="flex align-center margin-left text-sm" style="width:350rpx">
+                <view class="margin-right-sm">
+                    <view>
+                        胜率:
+                    </view>
+                    <view>
+                        {{item.winRate}}
+                    </view>
+                </view>
+                <view class="margin-right-sm">
+                    <view>
+                        使用率:
+                    </view>
+                    <view>
+                        {{item.pickRate}}
+                    </view>
+                </view>
+                <view class="margin-right-sm">
+                    <view>
+                        场数:
+                    </view>
+                    <view>
+                        {{item.count}}
+                    </view>
+                </view>
+            </view>
+        </view>
+    </view>
+    <view class="cu-bar justify-left bg-white">
+        <view class="action sub-title">
+            <text class="text-xl text-bold text-cyan">出门装</text>
+            <text class="bg-cyan" style="width:4rem"></text>
+        </view>
+    </view>
+    <view class="padding-top-sm padding-left flex flex-direction justify-start bg-white align-center">
+        <view class="flex justify-between margin-bottom-sm" style="width:100%"
+              wx:for="{{spellItem.itemWinrates.starting}}">
+            <view class="flex">
+                <view wx:for="{{item.itemIdList}}" wx:for-item="itemIdList" wx:key="index">
+                    <view wx:if="{{itemIdList.length === 1}}">
+                        <view class="cu-avatar margin-right-sm"
+                              style="{{'background-image:url(https://cdn.lol.ps/assets/img/items/'+itemIdList[0]+'_40.webp);'}}"></view>
+                    </view>
+                    <view wx:else>
+                        <view class="cu-avatar margin-right-sm"
+                              style="{{'background-image:url(https://cdn.lol.ps/assets/img/items/'+itemIdList[0]+'_40.webp);'}}">
+                            <view class="cu-tag badge">x{{itemIdList.length}}</view>
+                        </view>
+                        <!--                        <view wx:for="{{itemIdList}}" wx:for-item="item" wx:key="index" class="cu-avatar margin-right-sm"-->
+                        <!--                              style="{{'background-image:url(https://cdn.lol.ps/assets/img/items/'+item+'_40.webp);'}}"></view>-->
+
+                    </view>
+
+                </view>
+            </view>
+            <view class="flex align-center margin-left text-sm" style="width:350rpx">
+                <view class="margin-right-sm">
+                    <view>
+                        胜率:
+                    </view>
+                    <view>
+                        {{item.winRate}}
+                    </view>
+                </view>
+                <view class="margin-right-sm">
+                    <view>
+                        使用率:
+                    </view>
+                    <view>
+                        {{item.pickRate}}
+                    </view>
+                </view>
+                <view class="margin-right-sm">
+                    <view>
+                        场数:
+                    </view>
+                    <view>
+                        {{item.count}}
+                    </view>
+                </view>
+            </view>
+        </view>
+
+    </view>
+    <view class="cu-bar justify-left bg-white">
+        <view class="action sub-title">
+            <text class="text-xl text-bold text-cyan">鞋子</text>
+            <text class="bg-cyan" style="width:4rem"></text>
+        </view>
+    </view>
+    <view class="padding-top-sm margin-bottom-xs padding-left flex flex-direction justify-start bg-white align-center">
+        <view class="flex justify-between margin-bottom-sm" style="width:100%" wx:for="{{spellItem.itemWinrates.shoes}}"
+              wx:for-item="item" wx:key="index">
+            <view class="cu-avatar"
+                  style="{{'background-image:url(https://cdn.lol.ps/assets/img/items/'+item.itemId+'_40.webp);'}}"></view>
+            <view class="flex align-center margin-left text-sm" style="width:350rpx">
+                <view class="margin-right-sm">
+                    <view>
+                        胜率:
+                    </view>
+                    <view>
+                        {{item.winRate}}
+                    </view>
+                </view>
+                <view class="margin-right-sm">
+                    <view>
+                        使用率:
+                    </view>
+                    <view>
+                        {{item.pickRate}}
+                    </view>
+                </view>
+                <view class="margin-right-sm">
+                    <view>
+                        场数:
+                    </view>
+                    <view>
+                        {{item.count}}
+                    </view>
+                </view>
+            </view>
+        </view>
+    </view>
+    <view class="cu-bar bg-white solid-bottom">
+        <view class="action sub-title">
+            <text class="text-xl text-bold text-cyan">装备推荐</text>
+            <text class="bg-cyan" style="width:4rem"></text>
+        </view>
+        <view class="text-bold text-sm flex">
+            <view wx:for="{{tills}}"
+                  class="margin-right-sm radius padding-lr-xs {{tillKey === item.key ? 'bg-cyan':''}}"
+                  catch:tap='changeTill' data-key="{{item.key}}">
+                {{item.title}}
+            </view>
+        </view>
+    </view>
+    <view class="padding-top-sm margin-bottom-xs padding-left flex flex-direction justify-start bg-white align-center">
+        <view class="flex justify-between margin-bottom-sm" style="width:100%"
+              wx:for="{{spellItem.itemWinrates[tillKey]}}"
+              wx:for-item="till" wx:key="index">
+            <view class="flex">
+                <view wx:if="{{tillKey === 'th1'}}" class="margin-right-sm">
+                    <view class="cu-avatar"
+                          style="{{'background-image:url(https://cdn.lol.ps/assets/img/items/'+till.itemId+'_40.webp);'}}"></view>
+                </view>
+                <view wx:else class="flex">
+                    <view wx:for="{{till.itemIdList}}" wx:for-item="item" wx:key="index" class="margin-right-sm">
+                        <view class="cu-avatar"
+                              style="{{'background-image:url(https://cdn.lol.ps/assets/img/items/'+item+'_40.webp);'}}"></view>
+                    </view>
+                </view>
+            </view>
+            <view class="flex align-center margin-left text-sm" style="width:350rpx">
+                <view class="margin-right-sm">
+                    <view>
+                        胜率:
+                    </view>
+                    <view>
+                        {{till.winRate}}
+                    </view>
+                </view>
+                <view class="margin-right-sm">
+                    <view>
+                        使用率:
+                    </view>
+                    <view>
+                        {{till.pickRate}}
+                    </view>
+                </view>
+                <view class="margin-right-sm">
+                    <view>
+                        场数:
+                    </view>
+                    <view>
+                        {{till.count}}
+                    </view>
+                </view>
+            </view>
+
+        </view>
+    </view>
+
+</view>
