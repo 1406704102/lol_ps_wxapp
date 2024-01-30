@@ -1,0 +1,80 @@
+<view scroll-y="true" bind:tap="moveH" style="height:100vh">
+
+    <cu-custom bgColor="bg-gradual-blue-light" isDesc="{{true}}">
+        <view slot="descText" class="text-black text-bold">{{description}}</view>
+        <view slot="content" class="text-black text-bold">英雄排行</view>
+    </cu-custom>
+    <view class="flex justify-start">
+        <scroll-view scroll-x="true" class="tab" scroll-left="{{scrollLeft}}">
+            <view class="tab-item {{currentTab == index ? 'tab-active' : ''}}" data-current="{{index}}"
+                  catch:tap="switchNav" wx:for="{{tabName}}" wx:key="index">{{item}}
+            </view>
+            <!--                <navigator url="/pages/search/index" class="tab-item">-->
+            <!--                    <text class="cuIcon-search lg text-black text-bold"></text>-->
+            <!--                </navigator>-->
+        </scroll-view>
+    </view>
+<!--    <view class="flex align-center justify-end padding-sm text-bold bg-white"-->
+<!--          style="position: sticky;top:{{CustomBar}}px;z-index:9999;height:40rpx">-->
+<!--        <view style="width:460rpx" class=" flex justify-between align-center">-->
+<!--            <view style="width:125rpx">PS</view>-->
+<!--            <view style="width:125rpx">蜜蜂</view>-->
+<!--            <view style="width:125rpx">胜率</view>-->
+<!--            <view style="width:125rpx">登场率</view>-->
+<!--        </view>-->
+<!--    </view>-->
+    <swiper current="{{currentTab}}" duration="300" bindchange="switchTab"
+            style="height:{{WHeight-CustomBar-150-80}}rpx"
+            class="tab-content">
+
+        <swiper-item wx:for="{{tabName}}" wx:for-item="item" wx:for-index="index" wx:key="index"
+                     class="bg-white">
+            <scroll-view scroll-y="true" style="height:100%;" class="bg-gray">
+                <view wx:for="{{dataList[index]}}" wx:for-item="itemC" wx:for-index="indexC" wx:key="index"
+                      catch:tap="getChampion" data-item="{{itemC}}"
+                      class="flex justify-between padding-sm margin-top-xs bg-white">
+                    <view class="flex align-center">
+                        <view class="text-bold" style="width:40rpx">
+                            {{indexC + 1}}
+                        </view>
+
+                        <view class="cu-avatar xl radius margin-right bg-gray"
+                              style="{{'background-image:url(https://cdn.lol.ps/assets/img/champion-portraits/'+ itemC.championId +'_60.webp);'}}">
+                            <view style="position: absolute;top:-30rpx;right:-20rpx" wx:if="{{itemC.isHoney}}">
+                                <image src="{{honeyImg}}" style="width:50rpx;height:50rpx">
+                                </image>
+                            </view>
+                        </view>
+
+                        <view class="text-bold text-xl flex-direction flex justify-center">
+                            {{itemC.championInfo.nameCn}}
+                        </view>
+                    </view>
+                    <view class="flex ">
+                        <view class="flex flex-direction justify-between align-center text-left text-sm text-gray"
+                              style="width:200rpx">
+                            <view style="width:100%">
+                                op: {{itemC.opScore}}
+                            </view>
+                            <view style="width:100%">
+                                推荐: {{itemC.honeyScore}}
+                            </view>
+                            <view style="width:100%">
+                                胜率: {{itemC.winRate}}%
+                            </view>
+                            <view style="width:100%">
+                                禁用率: {{itemC.pickRate}}%
+                            </view>
+                        </view>
+                        <view class="flex flex-direction justify-center text-bold {{itemC.opTier === 1 ? 'text-red':''}} {{itemC.opTier === 2 ? 'text-orange': ''}} {{itemC.opTier === 3 ? 'text-yellow': ''}} {{itemC.opTier === 4 ? 'text-olive': ''}} {{itemC.opTier === 5 ? 'text-cyan': ''}}">
+                            T {{itemC.opTier}}
+                        </view>
+                    </view>
+                </view>
+
+                <view class="cu-load text-bold text-cyan {{!isLoad?'loading':'over'}}" style="height:150rpx"></view>
+            </scroll-view>
+
+        </swiper-item>
+    </swiper>
+</view>

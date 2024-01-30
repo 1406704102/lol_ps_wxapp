@@ -1,0 +1,45 @@
+<wxs module="filters" src="/utils/filter.wxs"/>
+
+<cu-custom bgColor="bg-gradual-blue-light" isDesc="{{true}}">
+    <view slot="descText" class="text-black text-bold">{{description}}</view>
+    <view slot="content" class="text-black text-bold">英雄改动</view>
+</cu-custom>
+        <!--<view class="margin-left-sm padding-bottom-lg margin-top-sm flex justify-start align-center flex-wrap" style="margin-bottom:120rpx">-->
+        <!--    <view catch:tap="toChampion" data-id="{{item.heroId}}" data-name="{{item.name}}"-->
+        <!--          class="flex flex-direction align-center margin-top-sm margin-right-sm" wx:for="{{champion}}"-->
+        <!--          wx:if="{{item.isShow}}" style="width:162.5rpx">-->
+        <!--&lt;!&ndash;        <view class="cu-avatar xl radius bg-gray"&ndash;&gt;-->
+        <!--&lt;!&ndash;              style="{{'background-image:url(https://cdn.lol.ps/assets/img/champion-loading/'+ item.heroId +'.webp);'}}">&ndash;&gt;-->
+
+        <!--&lt;!&ndash;        </view>&ndash;&gt;-->
+
+        <!--        <view class="text-xs text-center margin-top-xs">-->
+        <!--            {{item.name}}-->
+        <!--        </view>-->
+        <!--    </view>-->
+        <!--</view>-->
+<view class='nav-list'>
+    <view open-type="navigate" hover-class='none' url="/pages/basics/{{item.name}}/{{item.name}}"
+               class="nav-li flex bg-{{colors[item.colorIndex]}} shadow-blur" wx:for="{{champion}}" wx:key>
+        <image src="https://cdn.lol.ps/assets/img/champion-loading/{{item.heroId}}.webp" mode="aspectFill"
+               style="width:200rpx;height:364rpx" class="radius"></image>
+
+        <view class="margin-left">
+            <view class="text-bold">{{item.name}}</view>
+            <view>{{colors[item.colorIndex]}}</view>
+        </view>
+    </view>
+
+    <!--    <view wx:for="{{champion}}" class="nav-li bg-{{colors[filters.random(30,1)]}} shadow-blur flex" style="height:364rpx;overflow:hidden">-->
+    <!--&lt;!&ndash;        <image src="https://cdn.lol.ps/assets/img/champion-loading/{{item.heroId}}.webp" mode="aspectFill" style="width:200rpx;height:364rpx"></image>&ndash;&gt;-->
+    <!--&lt;!&ndash;        <view class="padding">&ndash;&gt;-->
+    <!--&lt;!&ndash;            <view class="text-bold text-lg">&ndash;&gt;-->
+    <!--&lt;!&ndash;                {{item.name}}&ndash;&gt;-->
+    <!--&lt;!&ndash;            </view>&ndash;&gt;-->
+    <!--&lt;!&ndash;        </view>&ndash;&gt;-->
+    <!--&lt;!&ndash;                <view class="nav-title">{{item.title}}</view>&ndash;&gt;-->
+    <!--        123-->
+    <!--                <view class="nav-name">{{item.name}}1111</view>-->
+    <!--                <text class='cuIcon-{{item.icon}}'></text>-->
+    <!--    </view>-->
+</view>

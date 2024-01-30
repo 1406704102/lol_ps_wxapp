@@ -1,0 +1,31 @@
+<!--<cu-custom bgColor="bg-white" iconColor="black">-->
+        <!--    <view slot="content" class="text-black">搜索英雄</view>-->
+        <!--</cu-custom>-->
+<view style="height:{{CustomBar}}px;position: sticky;top:0px;z-index:9999;"
+      class="flex flex-direction justify-end bg-gradual-blue-light">
+    <view class="cu-bar search " style="width:530rpx">
+        <view class="search-form round">
+            <text class="cuIcon-search"></text>
+            <input type="text" placeholder="搜索{{searchType === '0'?'英雄 对局 数据':'英雄 基础 数据'}}"
+                   confirm-type="search" bindinput="searchChampion"></input>
+            <button class="cu-btn sm round " style="width:160rpx;height:100%;margin-top:-2rpx" catch:tap="changeType">
+                <view>
+                    {{searchType === '0' ? '对局数据' : '基础数据'}}<text class="cuIcon-order margin-left-xs"></text>
+                </view>
+            </button>
+        </view>
+
+    </view>
+</view>
+<view class="margin-left-sm padding-bottom-lg margin-top-sm flex justify-start align-center flex-wrap" style="margin-bottom:120rpx">
+    <view catch:tap="toChampion" data-id="{{item.heroId}}" data-name="{{item.name}}"
+          class="flex flex-direction align-center margin-top-sm margin-right-sm" wx:for="{{champion}}"
+          wx:if="{{item.isShow}}" style="width:162.5rpx">
+        <view class="cu-avatar xl radius bg-gray"
+              style="{{'background-image:url(https://cdn.lol.ps/assets/img/champion-portraits/'+ item.heroId +'_60.webp);'}}">
+        </view>
+        <view class="text-xs text-center margin-top-xs">
+            {{item.name}}
+        </view>
+    </view>
+</view>

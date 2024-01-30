@@ -1,0 +1,363 @@
+<wxs module="filters" src="/utils/filter.wxs"/>
+<cu-custom bgColor="bg-white" isBack="{{true}}">
+    <view slot="backText">返回</view>
+    <view slot="content">{{hero.name}}</view>
+    <!--    <view class="action" slot="right">-->
+    <!--        <view class="cu-load load-icon {{!isLoad?'loading':'over'}}"></view>-->
+    <!--    </view>-->
+</cu-custom>
+<swiper class="screen-swiper square-dot" indicator-dots="true" circular="true" autoplay="true" interval="5000"
+        duration="500" style="height:384rpx">
+    <swiper-item wx:for="{{skins}}" wx:for-item="item" wx:key="index" wx:if="{{item.chromas === '0'}}">
+        <image src="{{item.mainImg}}" mode="aspectFill" style="width:750rpx;height:384rpx"></image>
+        <!--            <video src="{{item.url}}" autoplay loop muted show-play-btn="{{false}}" controls="{{false}}" objectFit="cover" wx:if="{{item.type=='video'}}"></video>-->
+        <!--        <view style="z-index:999">-->
+        <!--            {{item.chromas === '0'}}-->
+        <!--        </view>-->
+        <view style="position: absolute;bottom:10rpx;left:10rpx" class="text-shadow text-white">{{item.name}}</view>
+    </swiper-item>
+</swiper>
+<!--<image src="{{skins[0].mainImg}}" mode="aspectFill" style="width:750rpx;height:384rpx"></image>-->
+
+<view class="cu-bar justify-left bg-white">
+    <view class="action sub-title">
+        <text class="text-xl text-bold text-cyan">基础数值</text>
+        <text class="bg-cyan" style="width:4rem"></text>
+    </view>
+
+    <view class="text-cyan margin-right" catch:tap="toDetail">
+        <text class="cuIcon-back lg text-gray" wx:if="{{canBack === '1'}}"></text> 排行数据 <text class="cuIcon-right lg text-gray" wx:if="{{canBack === '0'}}"></text>
+    </view>
+
+</view>
+<view class="padding bg-white margin-bottom-xs">
+
+    <view class="flex">
+        <text class="margin-right align-center" style="line-height:40rpx;" catch:tap="LV1">LV1</text>
+        <view class="cu-progress lg radius striped active" catch:touchmove="LVMove" catch:touchstart="LVStart"
+              catch:touchend="LVEnd">
+            <view class="bg-blue" style="width:{{LV*5.555}}%;font-size:30rpx">
+                {{LV}}
+            </view>
+        </view>
+        <text class="margin-left align-center" style="line-height:40rpx;" catch:tap="LV18">LV18</text>
+    </view>
+    <view class="margin-top-sm">
+        <view class="flex justify-around align-center text-center text-bold">
+            <view style="width:180rpx">
+                类型
+            </view>
+            <view style="width:150rpx">
+                基础数值
+            </view>
+            <view style="width:150rpx">
+                成长数值
+            </view>
+            <view style="width:150rpx">
+                排行
+            </view>
+        </view>
+        <view class="flex justify-around align-center text-center margin-top-sm">
+            <view class="flex align-center" style="width:180rpx">
+                <image src="{{hp}}" class="basic-icon margin-right-sm"></image>
+                <view>
+                    生命值
+                </view>
+            </view>
+            <view style="width:150rpx">
+                {{((basicInfo.hp * 100) + (basicInfo.hpLevel*100) * (LV - 1))/100 }}
+            </view>
+            <view style="width:150rpx">
+                {{basicInfo.hpLevel}}
+            </view>
+            <view style="width:150rpx">
+                {{basicInfo.championStatsRank.hp}}/{{basicInfo.allChampCount}}
+            </view>
+        </view>
+        <view class="flex justify-around align-center text-center margin-top-sm">
+            <view class="flex align-center" style="width:180rpx">
+                <image src="{{hpRegen}}" class="basic-icon margin-right-sm"></image>
+                <view>
+                    生命恢复
+                </view>
+            </view>
+            <view style="width:150rpx">
+                {{((basicInfo.hpRegen * 100) + (basicInfo.hpRegenLevel*100) * (LV - 1))/100 }}
+            </view>
+            <view style="width:150rpx">
+                {{basicInfo.hpRegenLevel}}
+            </view>
+            <view style="width:150rpx">
+                {{basicInfo.championStatsRank.hpRegen}}/{{basicInfo.allChampCount}}
+            </view>
+        </view>
+        <view class="flex justify-around align-center text-center margin-top-sm">
+            <view class="flex align-center" style="width:180rpx">
+                <image src="{{mp}}" class="basic-icon margin-right-sm"></image>
+                <view>
+                    法力值
+                </view>
+            </view>
+            <view style="width:150rpx">
+                {{((basicInfo.mp * 100) + (basicInfo.mpLevel*100) * (LV - 1))/100 }}
+            </view>
+            <view style="width:150rpx">
+                {{basicInfo.mpLevel}}
+            </view>
+            <view style="width:150rpx">
+                {{basicInfo.championStatsRank.mp}}/{{basicInfo.allChampCount}}
+            </view>
+        </view>
+        <view class="flex justify-around align-center text-center margin-top-sm">
+            <view class="flex align-center" style="width:180rpx">
+                <image src="{{mpRegen}}" class="basic-icon margin-right-sm"></image>
+                <view>
+                    生命恢复
+                </view>
+            </view>
+            <view style="width:150rpx">
+                {{((basicInfo.mpRegen * 100) + (basicInfo.mpRegenLevel*100) * (LV - 1))/100 }}
+            </view>
+            <view style="width:150rpx">
+                {{basicInfo.mpRegenLevel}}
+            </view>
+            <view style="width:150rpx">
+                {{basicInfo.championStatsRank.mpRegen}}/{{basicInfo.allChampCount}}
+            </view>
+        </view>
+        <view class="flex justify-around align-center text-center margin-top-sm">
+            <view class="flex align-center" style="width:180rpx">
+                <image src="{{attackDamage}}" class="basic-icon margin-right-sm"></image>
+                <view>
+                    攻击力
+                </view>
+            </view>
+            <view style="width:150rpx">
+                {{((basicInfo.attackDamage * 100) + (basicInfo.adLevel*100) * (LV - 1))/100 }}
+            </view>
+            <view style="width:150rpx">
+                {{basicInfo.adLevel}}
+            </view>
+            <view style="width:150rpx">
+                {{basicInfo.championStatsRank.attackDamage}}/{{basicInfo.allChampCount}}
+            </view>
+        </view>
+        <view class="flex justify-around align-center text-center margin-top-sm">
+            <view class="flex align-center" style="width:180rpx">
+                <image src="{{attackSpeed}}" class="basic-icon margin-right-sm"></image>
+                <view>
+                    攻击速度
+                </view>
+            </view>
+            <view style="width:150rpx">
+                {{filters.toFix2(((basicInfo.attackSpeed*1000) + (basicInfo.attackSpeed * (basicInfo.asLevel/100) *1000) * (LV - 1))/1000) }}
+<!--                {{filters.toFix2(1.22222) }}-->
+            </view>
+            <view style="width:150rpx">
+                {{basicInfo.asLevel}}%
+            </view>
+            <view style="width:150rpx">
+                {{basicInfo.championStatsRank.attackSpeed}}/{{basicInfo.allChampCount}}
+            </view>
+        </view>
+        <view class="flex justify-around align-center text-center margin-top-sm">
+            <view class="flex align-center" style="width:180rpx">
+                <image src="{{armor}}" class="basic-icon margin-right-sm"></image>
+                <view>
+                    护甲
+                </view>
+            </view>
+            <view style="width:150rpx">
+                {{((basicInfo.armor * 100) + (basicInfo.armorLevel*100) * (LV - 1))/100 }}
+            </view>
+            <view style="width:150rpx">
+                {{basicInfo.armorLevel}}
+            </view>
+            <view style="width:150rpx">
+                {{basicInfo.championStatsRank.armor}}/{{basicInfo.allChampCount}}
+            </view>
+        </view>
+        <view class="flex justify-around align-center text-center margin-top-sm">
+            <view class="flex align-center" style="width:180rpx">
+                <image src="{{spellBlock}}" class="basic-icon margin-right-sm"></image>
+                <view>
+                    魔法抗性
+                </view>
+            </view>
+            <view style="width:150rpx">
+                {{((basicInfo.spellBlock * 100) + (basicInfo.spellBlockLevel*100) * (LV - 1))/100 }}
+            </view>
+            <view style="width:150rpx">
+                {{basicInfo.spellBlockLevel}}
+            </view>
+            <view style="width:150rpx">
+                {{basicInfo.championStatsRank.spellBlock}}/{{basicInfo.allChampCount}}
+            </view>
+        </view>
+        <view class="flex justify-around align-center text-center margin-top-sm">
+            <view class="flex align-center" style="width:180rpx">
+                <image src="{{attackRange}}" class="basic-icon margin-right-sm"></image>
+                <view>
+                    攻击距离
+                </view>
+            </view>
+            <view style="width:150rpx">
+                {{basicInfo.attackRange}}
+            </view>
+            <view style="width:150rpx">
+                0
+            </view>
+            <view style="width:150rpx">
+                {{basicInfo.championStatsRank.attackRange}}/{{basicInfo.allChampCount}}
+            </view>
+        </view>
+        <view class="flex justify-around align-center text-center margin-top-sm">
+            <view class="flex align-center" style="width:180rpx">
+                <image src="{{moveSpeed}}" class="basic-icon margin-right-sm"></image>
+                <view>
+                    移动速度
+                </view>
+            </view>
+            <view style="width:150rpx">
+                {{basicInfo.moveSpeed}}
+            </view>
+            <view style="width:150rpx">
+                0
+            </view>
+            <view style="width:150rpx">
+                {{basicInfo.championStatsRank.moveSpeed}}/{{basicInfo.allChampCount}}
+            </view>
+        </view>
+    </view>
+</view>
+<view class="cu-bar justify-left bg-white">
+    <view class="action sub-title">
+        <text class="text-xl text-bold text-cyan">技能</text>
+        <text class="bg-cyan" style="width:4rem"></text>
+        <!-- last-child选择器-->
+    </view>
+</view>
+<view class="padding-sm bg-white padding-left margin-bottom-xs flex flex-direction justify-start align-center">
+    <!--    https://cdn.lol.ps/assets/img/skills/266_e_40.webp-->
+    <view class="solid-bottom width100 padding-bottom-sm">
+        <view class="flex align-center">
+            <view class="cu-avatar radius bg-gray margin-right"
+                  style="background-image:url(https://cdn.lol.ps/assets/img/skills/{{basicInfo.championId}}_p_40.webp)">
+            </view>
+            <view class="text-bold">
+                被动: {{basicInfo.passiveNameCn}}
+            </view>
+        </view>
+        <text>
+            {{basicInfo.passiveDescCn}}
+        </text>
+    </view>
+    <view class="solid-bottom width100 padding-bottom-sm margin-top-sm">
+        <view class="flex align-center">
+            <view class="cu-avatar radius bg-gray margin-right"
+                  style="background-image:url(https://cdn.lol.ps/assets/img/skills/{{basicInfo.championId}}_q_40.webp)">
+            </view>
+            <view class="text-bold">
+                Q: {{basicInfo.qNameCn}}
+            </view>
+        </view>
+        <text>
+            {{basicInfo.qDescCn}}
+        </text>
+    </view>
+    <view class="solid-bottom width100 padding-bottom-sm margin-top-sm">
+        <view class="flex align-center">
+            <view class="cu-avatar radius bg-gray margin-right"
+                  style="background-image:url(https://cdn.lol.ps/assets/img/skills/{{basicInfo.championId}}_w_40.webp)">
+            </view>
+            <view class="text-bold">
+                W: {{basicInfo.wNameCn}}
+            </view>
+        </view>
+        <text>
+            {{basicInfo.wDescCn}}
+        </text>
+    </view>
+    <view class="solid-bottom width100 padding-bottom-sm margin-top-sm">
+        <view class="flex align-center">
+            <view class="cu-avatar radius bg-gray margin-right"
+                  style="background-image:url(https://cdn.lol.ps/assets/img/skills/{{basicInfo.championId}}_e_40.webp)">
+            </view>
+            <view class="text-bold">
+                E: {{basicInfo.eNameCn}}
+            </view>
+        </view>
+        <text>
+            {{basicInfo.eDescCn}}
+        </text>
+    </view>
+    <view class="solid-bottom width100 padding-bottom-sm margin-top-sm">
+        <view class="flex align-center">
+            <view class="cu-avatar radius bg-gray margin-right"
+                  style="background-image:url(https://cdn.lol.ps/assets/img/skills/{{basicInfo.championId}}_r_40.webp)">
+            </view>
+            <view class="text-bold">
+                R: {{basicInfo.rNameCn}}
+            </view>
+        </view>
+        <text>
+            {{basicInfo.rDescCn}}
+        </text>
+    </view>
+    <!--    <view class="flex justify-start" style="width:100%">-->
+    <!--        <view wx:for="{{spells}}" wx:key="">-->
+    <!--            <view class="cu-avatar radius bg-gray margin-right" catch:tap="spell" data-key="{{index}}"-->
+    <!--                  data-spell="{{item}}"-->
+    <!--                  style="background-image:url({{item.abilityIconPath}})">-->
+    <!--            </view>-->
+    <!--            <view wx:if="{{spellKey === index}}" class="padding-right" style="width:100%">-->
+    <!--                <view class="text-center">-->
+    <!--                    <text class="cuIcon-triangledownfill text-xxl"></text>-->
+    <!--                </view>-->
+    <!--            </view>-->
+    <!--        </view>-->
+    <!--    </view>-->
+    <!--    <view wx:for="{{spells}}">-->
+    <!--        <view wx:if="{{spellKey ===index}}">-->
+    <!--            <view class="text-bold padding-bottom-xs">-->
+    <!--                {{item.name}}:-->
+    <!--                {{spellKey === 0 ? '被动技能' : ''}}-->
+    <!--                {{spellKey === 1 ? 'Q 技能' : ''}}-->
+    <!--                {{spellKey === 2 ? 'W 技能' : ''}}-->
+    <!--                {{spellKey === 3 ? 'E 技能' : ''}}-->
+    <!--                {{spellKey === 4 ? 'R 技能' : ''}}-->
+    <!--            </view>-->
+    <!--            {{item.description}}-->
+    <!--        </view>-->
+    <!--    </view>-->
+</view>
+
+<view class="cu-bar justify-left bg-white">
+    <view class="action sub-title">
+        <text class="text-xl text-bold text-cyan">版本历史</text>
+        <text class="bg-cyan" style="width:4rem"></text>
+    </view>
+</view>
+<view class="padding bg-white margin-bottom-xs">
+    <view wx:for="{{patchHistory}}" class="solid-bottom margin-bottom padding-bottom-sm">
+        <view class="margin-top-sm">
+            <view class="flex align-center text-lg text-bold">
+                <view class="margin-right" style="width:100rpx">
+                    {{item.patchVersion.description}}
+                </view>
+                <view>
+                    <!--                https://cdn.lol.ps/assets/img/skills/164_r_40.webp-->
+                    <view class="cu-avatar radius bg-gray margin-right"
+                          style="background-image:url(https://cdn.lol.ps/assets/img/skills/{{basicInfo.championId}}_{{item.skill === 'passive'? 'p':item.skill}}_40.webp)">
+                    </view>
+                </view>
+                <view>
+                    {{versionDescription === item.patchVersion.description ? '当前版本':''}}
+                </view>
+            </view>
+            <text>
+{{item.contentCn}}
+            </text>
+        </view>
+    </view>
+</view>
