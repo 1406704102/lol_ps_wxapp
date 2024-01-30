@@ -1,0 +1,15 @@
+
+var filters = {
+    toFix2: function (value) {
+        return value.toFixed(2); // 保留两位小数
+    },
+    random: function (max,min) {
+        var newVar = Math.floor(Math.random() * (max - min + 1)) + min;
+        return newVar;; // 保留两位小数
+    },
+}
+
+module.exports = {
+    toFix2: filters.toFix2,
+    random: filters.random
+}
